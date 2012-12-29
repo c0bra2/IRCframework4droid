@@ -3,7 +3,7 @@
 *	VERSION 1.0.0
 *	Written by c0bra2; project started (2012)
 *	This code is protected under the GPL
-**********************************************
+
 
 This Project was started as a Framework class which can be used to make IRC bots
 quickly and easily while also implementing features unique to the Android API.
@@ -32,6 +32,6 @@ Index out of range. and your bot will crash.
 *************************
 *ToDo for future version*
 *************************
-::bug fixes (connectivity issues etc)
-::clean up the code
-::add more methods to the Framework which add additional API and IRC features
+*	bug fixes (connectivity issues etc)
+*	clean up the code
+*	add more methods to the Framework which add additional API and IRC features
