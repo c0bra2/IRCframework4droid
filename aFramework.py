@@ -24,16 +24,16 @@ class Framework():
 		self.server = self.droid.dialogGetInput("Server", "connect to which server?").result
 		self.channel = self.droid.dialogGetInput("Channel", "join which channel?").result
 		self.port = 6667
-		if (self.nick == None) or (self.nick == ''):
+		if (not self.nick):
 			self.nick = "defaultNick"
-		elif (self.server == None) or (self.server == ''):
+		elif (not self.server):
 			self.server = "irc.hackthissite.org"
-		elif (self.channel == None) or (self.channel == ''):
+		elif (not self.channel):
 			self.channel = "#hackthissite"
 
 	def join(self, string):
 		#join a channel
-		time.sleep(5)
+		time.sleep(5)#may create a timeout
 		self.channel = string
 		self.s.send('JOIN %s\r\n' % string)
 	
@@ -64,15 +64,8 @@ class Framework():
 
 	def get_nick(self):
 		#get the person who is talking in the channel
-		self.res = ''
-		try:
-			for i in self.raw[1]:
-				if i != '!':
-					self.res += i
-				else:
-					return self.res
-		except:
-			return 'nobody'
+		return self.raw[1:self.raw.find('!')]
+		
 	def write(self, string):
 		#write something to the channel
 		self.s.send('PRIVMSG %s :%s\r\n' % (self.channel, string))
