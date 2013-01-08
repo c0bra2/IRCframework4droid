@@ -1,8 +1,27 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Android Bot Framework
-# version 1.0.0
-# written by c0bra2 (12/27/2012)
-# this code is protected under GPL
-###################################
+# version 1.0.1
+#
+#  aFramework.py
+#  
+#  Copyright 2013 Cobra2
+#  
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
 
 import socket, time, android 
 
@@ -25,7 +44,7 @@ class Framework():
 		self.channel = self.droid.dialogGetInput("Channel", "join which channel?").result
 		self.port = 6667
 		if (not self.nick):
-			self.nick = "defaultNick"
+			self.nick = "IrcDroidB0t"
 		elif (not self.server):
 			self.server = "irc.hackthissite.org"
 		elif (not self.channel):
@@ -47,7 +66,7 @@ class Framework():
 		self.raw_string = self.raw
 		self.line = self.line.split(':')
 		self.raw = self.raw.split(':')
-		if 'comment' in self.raw_string:
+		if 'comment' in self.raw_string:#souldn't we use string.startswith(...) ??
 			self.comment = self.raw_string.split('comment')[1]
 		else:
 			self.comment = ' '
@@ -81,8 +100,8 @@ class Framework():
 			for i in aList[:]:
 				words += (i + ' ')
 			self.droid.ttsSpeak(words)
-		except:
-			print "speech error"
+		except:#errors should be defined
+			print "speech error"#why no raise statement here?
 
 if __name__ == '__main__':
 	#example bot that can be made using this framework
@@ -92,7 +111,7 @@ if __name__ == '__main__':
 
 	while 1: 
 		myBot.parse()
-		if 'PING' in myBot.raw_string:
+		if myBot.raw_string.startswith('PING'):
 			myBot.pong()
 
 		#bot commands/responding conditions
