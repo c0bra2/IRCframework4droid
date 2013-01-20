@@ -41,7 +41,7 @@ class Framework():
 	def getIRC_info(self):
 		self.nick = self.droid.dialogGetInput("Nickname", "what is the bots nickname?").result
 		self.server = self.droid.dialogGetInput("Server", "connect to which server?").result
-		self.channel = self.droid.dialogGetInput("Channel", "join which channel?").result
+		self.channel = self.droid.dialogGetInput("Channel", "join which channel?", '#').result
 		self.port = 6667
 		if (not self.nick):
 			self.nick = "IrcDroidB0t"
@@ -52,7 +52,7 @@ class Framework():
 
 	def join(self, string):
 		#join a channel
-		time.sleep(5)#may create a timeout
+    time.sleep(2)
 		self.channel = string
 		self.s.send('JOIN %s\r\n' % string)
 	
@@ -62,11 +62,9 @@ class Framework():
 	def parse(self):
 		#irc parser
 		self.line = self.s.recv(1024)
-		self.raw = self.line
-		self.raw_string = self.raw
-		self.line = self.line.split(':')
-		self.raw = self.raw.split(':')
-		if 'comment' in self.raw_string:#souldn't we use string.startswith(...) ??
+		self.raw_string = self.line
+		self.raw = self.line.split(":")
+		if 'comment' in self.raw_string:
 			self.comment = self.raw_string.split('comment')[1]
 		else:
 			self.comment = ' '
@@ -109,7 +107,7 @@ if __name__ == '__main__':
 	myBot.join(myBot.channel)
 	myBot.speakEnabled = False
 
-	while 1: 
+	while True:
 		myBot.parse()
 		if myBot.raw_string.startswith('PING'):
 			myBot.pong()
